@@ -1,6 +1,8 @@
 # deep copy nested dictionaries, lists
 
 # sample input
+# data = 2
+# data = [1, [2], [3, [4]]]
 data = {"a": 3, "b": {"x": {"y": 1}}, "c": [1, [2], [[3]]]}
 
 
