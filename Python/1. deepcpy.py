@@ -1,7 +1,7 @@
 # deep copy nested dictionaries, lists
 
-# data = 3
-data = {"a": 3, "b": {"x": 2}}
+# sample input
+data = {"a": 3, "b": {"x": {"y": 1}}, "c": [1, [2], [[3]]]}
 
 
 def check_non_nested(ip):
@@ -16,24 +16,28 @@ def check_dict(ip):
     return isinstance(ip, dict)
 
 
+# traversing recrusively through each key and return the new object copy
 def deep_copy(ip):
     if check_non_nested(ip):
         return ip
 
     if check_dict(ip):
-        for key, val in ip.items():
+        ip_cpy = ip.copy()
+        for key, val in ip_cpy.items():
             v = deep_copy(val)
-            print(id(val), id(v))
             ip[key] = v
 
-        return ip.copy()
+        return ip_cpy
+
+    if check_list(ip):
+        ip_cpy = ip.copy()
+        for i, j in enumerate(ip_cpy):
+            ip_cpy[i] = deep_copy(j)
+        return ip_cpy
 
 
 output = deep_copy(data)
-print(id(output), id(data))
-print(id(output["b"]), id(data["b"]))
-print(id(output["b"]["x"]), id(data["b"]["x"]))
 
-data["b"]["x"] = 10
+data["c"][2][0][0] = [3, 4, 5]
 print(data)
 print(output)
